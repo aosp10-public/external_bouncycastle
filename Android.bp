@@ -14,10 +14,22 @@
 // limitations under the License.
 //
 
+java_defaults {
+    name: "bouncycastle-errorprone-defaults",
+    errorprone: {
+        javacflags: [
+            "-Xep:MissingOverride:OFF",  // Ignore missing @Override.
+        ],
+    },
+}
+
 // These cannot build in the PDK, because the PDK requires all libraries
 // compile against SDK versions.
 java_defaults {
     name: "bouncycastle-defaults",
+    defaults: [
+        "bouncycastle-errorprone-defaults",
+    ],
     host_supported: true,
     hostdex: true,
     target: {
@@ -94,6 +106,9 @@ java_library {
 // unbundled bouncycastle jar
 java_library_static {
     name: "bouncycastle-unbundled",
+    defaults: [
+        "bouncycastle-errorprone-defaults",
+    ],
 
     sdk_version: "9",
     srcs: ["bcprov/src/main/java/**/*.java"],
@@ -112,6 +127,7 @@ java_library_static {
     srcs: ["bcpkix/src/main/java/**/*.java"],
     exclude_srcs: ["bcpkix/src/main/java/org/bouncycastle/cert/ocsp/**/*.java"],
     no_framework_libs: true,
+    java_version: "1.7",
     libs: [
         "bouncycastle-nojarjar",
         "conscrypt",
@@ -125,6 +141,7 @@ java_library_static {
     static_libs: ["bouncycastle-bcpkix-nojarjar"],
     libs: ["conscrypt"],
     no_framework_libs: true,
+    java_version: "1.7",
 
     target: {
         android: {
@@ -142,6 +159,7 @@ java_library_static {
         "bcpkix/src/main/java/org/bouncycastle/cert/ocsp/**/*.java",
         "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
     ],
+    java_version: "1.7",
     no_framework_libs: true,
     libs: [
         "bouncycastle-nojarjar",
