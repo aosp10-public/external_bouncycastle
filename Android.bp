@@ -80,7 +80,6 @@ java_library {
         "core-all",
     ],
     system_modules: "core-all-system-modules",
-    java_version: "1.7",
 }
 
 // A guaranteed unstripped version of bouncycastle.
@@ -97,6 +96,9 @@ java_library {
     libs: [
         "core-all",
     ],
+    dex_preopt: {
+        enabled: false,
+    },
     system_modules: "core-all-system-modules",
     java_version: "1.7",
 }
